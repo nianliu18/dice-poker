@@ -1,0 +1,47 @@
+https://www.youtube.com/watch?v=vjPIDX-itvc
+
+https://stackoverflow.com/questions/7961788/math-random-explained
+
+http://api.jquery.com/jquery.each/
+
+Gainon TA.
+
+
+
+// yahtzee
+https://github.com/SmithTM90/Yahtzee-Game/blob/master/src/js/app.js
+
+
+yahtzee game Super helpful on checkingXOfAKind
+https://ubuntuforums.org/showthread.php?t=1913896
+
+function sortNumber(a, b){
+  return a-b;
+}
+
+function checkXOfAKind(n){
+  let value = 1;
+  let dices1 = $('.dices1').sort(sortNumber);
+  for(let i = 0; i < dices1.length; i++) {
+    if (dices1[0] === dices[i]) {
+      value += 1;
+    } else {
+      value = 1;
+    }
+  }
+  return value;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
