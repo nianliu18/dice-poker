@@ -1,4 +1,7 @@
 $(document).ready(function() {
+  // let dices1 = $('.dices1')
+  // let box1 = $('#handBox1')
+  // let tar;
 
   $('.game-container').hide();
 
@@ -8,36 +11,76 @@ $(document).ready(function() {
 
   })
 
-
+//    function hello(e){
+//       let newArray = [];
+//       for(let i = 0; i<dices1.length; i++){
+//         dices1.on('click',function(e){
+//         tar = e.target.innerHTML
+//         console.log(tar)
+//           // box1.append(tar)
+//         })
+//       }
+//    }
+// hello()
   // **Will use when comparing Value of Dice**
-
-  // function diceRank(dice, rank) {
-  //   let rank = rank.toLowerCase();
-  //   if(dice === '1') {
-  //     rank = 7;
-  //   } else if (dice === '2') {
-  //     rank = 2;
-  //   } else if (dice === '3') {
-  //     rank = 3;
-  //   } else if (dice === '4') {
-  //     rank = 4;
-  //   } else if (dice === '5') {
-  //     rank = 5;
-  //   } else if (dice === '6') {
-  //     rank = 6;
-  //   }
-  // }
-
+  let p1Array = [];
   $('#roll-but1').click(function() {
-    let p1Array = [];
     $('.dices1').each(function(index, die) {
       //function with element die at current index for each class in $('.dices1')**
       let dice = Math.floor(Math.random()*6)+1;
       p1Array.push(dice);
       $(die).html(dice);
     })
-    checkXOfAKind1(p1Array);
+    checkForMatch(p1Array);
+    moveDices1();
   })
+
+  function moveDices1() {
+    let dices = $('.dices1');
+    for (let i = 0; i < dices.length; i++) {
+      dices[i].addEventListener("click", function() {
+        $('#handBox1').append(dices[i]).removeClass('dices1');
+      });
+    }
+  }
+
+  const diceRank = {
+    '1': 7,
+    '6': 6,
+    '5': 5,
+    '4': 4,
+    '3': 3,
+    '2': 2
+  }
+
+
+  function score() {
+
+  }
+
+  let pairs = 0;
+  let threes = 0;
+  let fours = 0;
+  let fives = 0;
+  switch(checkForMatch(array)) {
+    case 2:
+      pairs++;
+      break;
+    case 3:
+      threes++;
+      break;
+    case 4:
+      fours++;
+      break;
+    case 5:
+      fives++
+      break;
+      if (pairs === 1) {
+
+      }
+  }
+
+
 
   $('#roll-but2').click(function() {
     let p2Array = [];
@@ -46,116 +89,85 @@ $(document).ready(function() {
       p2Array.push(dice);
       $(die).html(dice);
     })
-    // checkXOfAKind2(p2Array);
+    checkForMatch(p2Array);
+    moveDices2();
   })
 
-
-  function checkXOfAKind1(array) {
-    let value = 1;
-    //below we checking five random dices
-    for(let i = 0; i < array.length; i++) {
-      if (array[0] === array[i]) {
-        value += 1;
-      } else {
-        value = 1;
-      }
+  function moveDices2() {
+    let dices2 = $('.dices2');
+    for (let i = 0; i < dices2.length; i++) {
+      dices2[i].addEventListener("click", function() {
+        $('#handBox2').append(dices2[i]);
+      });
     }
-    return value;
   }
 
-  // function checkXOfAKind2(array) {
-  //   let value = 1;
-  //   let dices1 = $('.dices1').sort(sortNumber);
-  //   //below we checking up to five dices
-  //   for(let i = 0; i < dices1.length; i++) {
-  //     if (dices1[0] === dices[i]) {
-  //       value += 1;
-  //     } else {
-  //       value = 1;
-  //     }
-  //   }
-  //   return value;
+  // const diceRank = {
+  //   '1': 7,
+  //   '6': 6,
+  //   '5': 5,
+  //   '4': 4,
+  //   '3': 3,
+  //   '2': 2
   // }
 
-  function checkPairs(array) {
-    if (checkXOfKind1(array) === 2) {
-      $('#status1').html('Pairs');
-    }
+  function checkForMatch(array) {
+    return array.reduce((tally, n) => {
+      //the tally key is name of item(n), if never seen before
+      //init to 1. if seen before incriment by 1.
+      tally[n] = tally[n] + 1 || 1;
+      return tally;
+    }, {});
   }
+});
+
+  // let tally1 = checkForMatch(p1Array);
+  // let tall2 = checkForMatch(p2Array);
+  // let values = tally.entries();
 
 
 
+// object.entries [k,v]
+
+  // function grabPairs() {
+  //   if (eleCount1(array) === 2) {
+  //     $('#status' + p).html('Pairs!');
+  //     $('#handBox' + p).html(... + ...);
+  //   }
+  // }
 
 
-
+ /**
+   * @func checkForMatch1
+   * @param array - it is the array containing the...
+   * @desc func callback
+   * @returns {object} value of matches
+   */
   // function checkForMatch1(array){
+  //   // empty object to store matches
+  //   const tally = {};
+  //   //loop over array i by rows
   //   for (let i = 0; i < array.length; i++) {
-  //     for (let j = i + 1; j < array.length; j++) {
-  //       for (let k = j + 1; k < array.length; k++) {
-  //         for (let l = k + 1; l < array.length; l++) {
-  //           for (let m = l + 1; m < array.length; m++) {
-  //             if(array[i] === array[j, k , l ,m]) {
-  //               $('#handBox1').html(array[i] + ' ' + array[j]);
-  //               $('#status1').html('Pairs!');
-  //               $('.dices1')[array[i]].remove();
-  //               $('.dices1')[array[j]].remove();
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
 
-  // function checkForMatch2(array){
-  //   for (let i = 0; i < array.length; i++) {
-  //     for (let j = i + 1; j < array.length; j++) {
-  //       for (let k = j + 1; k < array.length; k++) {
-  //         for (let l = k + 1; l < array.length; l++) {
-  //           for (let m = l + 1; m < array.length; m++) {
-  //             if(array[i] === array[j]) {
-  //               $('#handBox2').html(array[i] + ' ' + array[j]);
-  //               $('#status2').html('Pairs!');
-  //               $('.dices2')[array[i]].remove();
-  //               $('.dices2')[array[j]].remove();
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-
-})
-
-  // if (array[i] === array[j]) {
-  //   $('#handBox'+ p).html(array[i] + ' ' + array[j]);
-  //   $('.dices1')[array[i]].remove();
-  //   $('.dices1')[array[j]].remove();
-  // }
-
-  // function eleCount1(array) {
-  //   let combos1 = {};
-  //   for (let i = 0; i < array.length; i++) {
-  //     let el = array[i]
-  //     if (combos1[el] === undefined) {
-  //       combos1[el] === 1;
+  //     // if I've seen this key before, dont even enter the loop
+  //     //skip over this row
+  //     if (array[i] in tally) {
+  //       continue;
+  //       //if i have not seen this before initialize it set to 0.
   //     } else {
-  //       combos1[el] += 1;
+  //        tally[array[i]] = 1;
   //     }
-  //   }
+
+  //     // loop across columns
+  //     for (let j = i + 1; j < array.length; j++) {
+  //       // console.log(i, j, array[i],array[j])
+  //       if (array[i] == array[j]) {
+  //         tally[array[i]]++;
+  //       }
+  //     }
+  //   } // end of the i loop
+  //   return tally;
   // }
-
-  /* function grabPairs() {
-    if (eleCount1(array) === 2) {
-      $('#status' + p).html('Pairs!');
-      $('#handBox' + p).html(... + ...);
-    }
-  }
-
-
-
-
 
 
 

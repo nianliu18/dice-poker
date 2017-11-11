@@ -32,7 +32,12 @@ function checkXOfAKind(n){
   return value;
 }
 
+//CSS stuff Overflow:hidden
+https://stackoverflow.com/questions/1702580/how-do-i-prevent-my-div-layers-from-overlapping-when-the-browser-is-resized
 
+
+Russian youtuber Poker Dice Switch Statements used
+https://www.youtube.com/watch?v=fmhCKLzhCaA
 
 
 
