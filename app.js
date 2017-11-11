@@ -1,7 +1,4 @@
 $(document).ready(function() {
-  // let dices1 = $('.dices1')
-  // let box1 = $('#handBox1')
-  // let tar;
 
   $('.game-container').hide();
 
@@ -11,40 +8,100 @@ $(document).ready(function() {
 
   })
 
-//    function hello(e){
-//       let newArray = [];
-//       for(let i = 0; i<dices1.length; i++){
-//         dices1.on('click',function(e){
-//         tar = e.target.innerHTML
-//         console.log(tar)
-//           // box1.append(tar)
-//         })
-//       }
-//    }
-// hello()
-  // **Will use when comparing Value of Dice**
-  let p1Array = [];
+  let playerTurn = 0;
+  let computeTurn = function(event) {
+    if (playerTurn % 2 === 0) {
+      $('#status').html("Player Twos Turn");
+      playerTurn++;
+    } else if (playerTurn % 2 !== 0) {
+      $('#status').html("Player Ones Turn");
+      playerTurn++;
+    }
+  }
+
+
+  // function player1() {
+  //   let rebuttal = 2;
+  // }
+
+
+
   $('#roll-but1').click(function() {
-    $('.dices1').each(function(index, die) {
-      //function with element die at current index for each class in $('.dices1')**
-      let dice = Math.floor(Math.random()*6)+1;
-      p1Array.push(dice);
-      $(die).html(dice);
-    })
-    checkForMatch(p1Array);
+    let hand = $('#handBox1').children().length;
+    console.log(hand);
+    let diceToRoll = 5 - hand;
+    let diceRolled = 0;
+    //find elements in handbox
+    //if handbox has ele subtract from 5.
+    //dices to roll = handbox ele - 5
+    //var dices roll = 0
+    let board = document.getElementById('board1');
+    if (board.children.length > 0) {
+      //innerHTML = blank
+      board.innerHTML = null;
+    }
+
+    for (let i = 0; i < diceToRoll; i++) {
+      let div = document.createElement('div');
+      div.setAttribute('class', 'dice1');
+      let roll = Math.floor(Math.random()*6)+1;
+      diceRolled++
+      //for loop will create two more dices to roll if we dont clear top with board.innerHTML = null;
+      div.innerHTML = roll;
+      board.appendChild(div);
+    }
+    computeTurn();
     moveDices1();
   })
 
   function moveDices1() {
-    let dices = $('.dices1');
+    let dices = $('.dice1');
+    console.log(dices);
     for (let i = 0; i < dices.length; i++) {
       dices[i].addEventListener("click", function() {
-        $('#handBox1').append(dices[i]).removeClass('dices1');
-      });
+        $('#handBox1').append(dices[i]);
+      })
     }
   }
 
-  const diceRank = {
+  $('#roll-but2').click(function() {
+    let hand = $('#handBox2').children().length;
+    console.log(hand);
+    let diceToRoll = 5 - hand;
+    let diceRolled = 0;
+    //find elements in handbox
+    //if handbox has ele subtract from 5.
+    //dices to roll = handbox ele - 5
+    //var dices roll = 0
+    let board = document.getElementById('board2');
+    if (board.children.length > 0) {
+      //innerHTML = blank
+      board.innerHTML = null;
+    }
+
+    for (let i = 0; i < diceToRoll; i++) {
+      let div = document.createElement('div');
+      div.setAttribute('class', 'dice2');
+      let roll = Math.floor(Math.random()*6)+1;
+      diceRolled++
+      //for loop will create two more dices to roll if we dont clear top with board.innerHTML = null;
+      div.innerHTML = roll;
+      board.appendChild(div);
+    }
+    computeTurn();
+    moveDices2();
+  })
+
+  function moveDices2() {
+    let dices = $('.dice2');
+    console.log(dices);
+    for (let i = 0; i < dices.length; i++) {
+      dices[i].addEventListener("click", function() {
+        $('#handBox2').append(dices[i]);
+      })
+    }
+  }
+    const diceRank = {
     '1': 7,
     '6': 6,
     '5': 5,
@@ -54,64 +111,9 @@ $(document).ready(function() {
   }
 
 
-  function score() {
-
-  }
-
-  let pairs = 0;
-  let threes = 0;
-  let fours = 0;
-  let fives = 0;
-  switch(checkForMatch(array)) {
-    case 2:
-      pairs++;
-      break;
-    case 3:
-      threes++;
-      break;
-    case 4:
-      fours++;
-      break;
-    case 5:
-      fives++
-      break;
-      if (pairs === 1) {
-
-      }
-  }
 
 
-
-  $('#roll-but2').click(function() {
-    let p2Array = [];
-    $('.dices2').each(function(index, die) {
-      let dice = Math.floor(Math.random()*6)+1;
-      p2Array.push(dice);
-      $(die).html(dice);
-    })
-    checkForMatch(p2Array);
-    moveDices2();
-  })
-
-  function moveDices2() {
-    let dices2 = $('.dices2');
-    for (let i = 0; i < dices2.length; i++) {
-      dices2[i].addEventListener("click", function() {
-        $('#handBox2').append(dices2[i]);
-      });
-    }
-  }
-
-  // const diceRank = {
-  //   '1': 7,
-  //   '6': 6,
-  //   '5': 5,
-  //   '4': 4,
-  //   '3': 3,
-  //   '2': 2
-  // }
-
-  function checkForMatch(array) {
+  function checkForMatch(array){
     return array.reduce((tally, n) => {
       //the tally key is name of item(n), if never seen before
       //init to 1. if seen before incriment by 1.
@@ -119,8 +121,8 @@ $(document).ready(function() {
       return tally;
     }, {});
   }
-});
 
+})
   // let tally1 = checkForMatch(p1Array);
   // let tall2 = checkForMatch(p2Array);
   // let values = tally.entries();
@@ -169,7 +171,27 @@ $(document).ready(function() {
   //   return tally;
   // }
 
+  // let pairs = 0;
+  // let threes = 0;
+  // let fours = 0;
+  // let fives = 0;
+  // switch(checkForMatch(array)) {
+  //   case 2:
+  //     pairs++;
+  //     break;
+  //   case 3:
+  //     threes++;
+  //     break;
+  //   case 4:
+  //     fours++;
+  //     break;
+  //   case 5:
+  //     fives++
+  //     break;
+  //     if (pairs === 1) {
 
+  //     }
+  // }
 
 
 
