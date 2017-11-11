@@ -11,3 +11,13 @@ Each player's goal is to try to get a poker combination that is bigger than the 
 Sounds like a lot to take in! But trust me, play a couple of rounds and you'll get the hang of it! 
 
 
+PROJECT Schedule/Phases
+--------------------------------
+Time Schedule:
+Thursday: Set HTML Divs and Borders
+Friday: Set app.js Dice combinations and test functionality of JQ/JS on HTML page. 
+Saturday: Improve HTML, JQ/JS code along with game logic. Smooth things out
+Sunday: CSS and Addon's for Game. Smooth things out even more. 
+Monday: DeBug presentation prep. 
+
+
