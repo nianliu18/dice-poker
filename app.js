@@ -7,7 +7,7 @@ $(document).ready(function() {
     $('.start-container').hide();
 
   })
-
+  //need to structure computeTurn
   let playerTurn = 0;
   let computeTurn = function(event) {
     if (playerTurn % 2 === 0) {
@@ -20,21 +20,20 @@ $(document).ready(function() {
   }
 
 
-  // function player1() {
-  //   let rebuttal = 2;
-  // }
+  function player1() {
+    let rebuttal = 2;
+  }
 
 
 
   $('#roll-but1').click(function() {
+    //find elements in handbox
     let hand = $('#handBox1').children().length;
     console.log(hand);
-    let diceToRoll = 5 - hand;
-    let diceRolled = 0;
-    //find elements in handbox
     //if handbox has ele subtract from 5.
-    //dices to roll = handbox ele - 5
-    //var dices roll = 0
+    let diceToRoll = 5 - hand;
+    //set dice rolled to zero
+    let diceRolled = 0;
     let board = document.getElementById('board1');
     if (board.children.length > 0) {
       //innerHTML = blank
@@ -113,14 +112,14 @@ $(document).ready(function() {
 
 
 
-  function checkForMatch(array){
-    return array.reduce((tally, n) => {
-      //the tally key is name of item(n), if never seen before
-      //init to 1. if seen before incriment by 1.
-      tally[n] = tally[n] + 1 || 1;
-      return tally;
-    }, {});
-  }
+  // function checkForMatch(array){
+  //   return array.reduce((tally, n) => {
+  //     //the tally key is name of item(n), if never seen before
+  //     //init to 1. if seen before incriment by 1.
+  //     tally[n] = tally[n] + 1 || 1;
+  //     return tally;
+  //   }, {});
+  // }
 
 })
   // let tally1 = checkForMatch(p1Array);

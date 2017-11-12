@@ -1,0 +1,32 @@
+logic
+
+p1 shakes and p2 shakes
+if player =higher hand, player lower hand shakes
+if lower player hand > higher player -higher player shakes
+run compare function if turns = 4
+
+if p1 shakes then p2 shakes run compare function. whoever higher, lower turn.
+if second rolled > then other p shakes if < other p wins.
+
+if p1 turn =1 and p2 = 1 run compareFunc
+if hb1 > hb2 p2 shakes, if p2 > p1 run compare function p1 shake.
+
+p1 keeps dices he wants
+p2 keeps dices he wants.
+if p1 > p2 , p2 shake again.
+if p2 > p1 , p1 shake again.
+if p2 reshake > p1, p1 reshake
+if p1 reshake > p2, p2 reshake
+after all possible second shakes, compare values
+
+compare function:
+p1 roll-but1 {if p1 turn = 2 compareFunc}
+
+
+
+
+
+
+
+
+
