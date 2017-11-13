@@ -12,35 +12,31 @@
 </head>
 
 <body>
-<div id='main-page' class='start-container'>
-  <button type="start-button" id='starting'>Lets Roll</button>
-  <img src= "character-images/homerStart.png">
-  <img src="character-images/barneyStart.png">
-</div>
+  <div id='main-page' class='start-container'>
+    <button type="start-button" id='starting'>Lets Roll</button>
+    <img src= "character-images/homerStart.png">
+    <img src="character-images/barneyStart.png">
+  </div>
 
-<div class='game-container'>
-  <div id='p1'>
-  <h2>Player One</h2>
-  <img src="character-images/homerGame.jpg">
-  <div id='handBox1' class='hand'></div>
-    <div id='board1' class='board'></div>
-    <button type="roll" id='roll-but1'>Roll</button>
+  <div id='game-container1'>
+    <h2>Player One</h2>
+    <img src="character-images/homerGame.jpg">
+    <div id='handBox1' class='hand'></div>
+      <div id='board1' class='board'></div>
+      <button type="roll" id='roll-but1'>Roll</button>
   </div>
 
   <div id='status'>Turn Display</div>
 
-  <div id='p2' class='game-container'>
+  <div id='game-container2'>
     <h2>Player Two</h2>
     <img src="character-images/barneyGame.jpg">
     <div id='handBox2' class='hand'></div>
-    <div id='board2' class='board'>
-    </div>
-      <button type="roll2" id='roll-but2'>Roll</button>
+    <div id='board2' class='board'></div>
+    <button type="roll2" id='roll-but2'>Roll</button>
   </div>
 
   <button type="menu" id="reset" onClick="window.location.reload()">Main Menu</button>
-</div>
-
 
 </body>
 </html>
