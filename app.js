@@ -25,10 +25,6 @@ $(document).ready(function() {
     }
   }
 
-
-
-
-
   $('#roll-but1').click(function() {
     //find elements in handbox
     let hand = $('#handBox1').children().length;
@@ -36,30 +32,33 @@ $(document).ready(function() {
     let diceToRoll = 5 - hand;
     //set dice rolled to zero
     let diceRolled = 0;
-    let board = document.getElementById('board1');
+    let board = $('#board1');
     if (board.children.length > 0) {
-      board.innerHTML = null;
+      board.html('');
       // this will wipe the board clean and produce
       //the same set of randomized dice.
       //problem previously was that creating individual divs connected all five dices so everytime i click roll when dices are in hand box and board box all five rolls. with this method only the bottom gets randomized.
     }
     for (let i = 0; i < diceToRoll; i++) {
-      let div = document.createElement('div');
-      div.setAttribute('class', 'dice1');
+      let div = $('<div>');
+      div.addClass('dice1');
       let roll = Math.floor(Math.random()*6)+1;
       diceRolled++
-      div.innerHTML = roll;
-      board.appendChild(div);
+      div.html(roll);
+      board.append(div);
     }
     computeTurn();
     moveDices1();
   })
 
+  let handArr1 = [];
   function moveDices1() {
     let dices = $('.dice1');
     for (let i = 0; i < dices.length; i++) {
       dices[i].addEventListener("click", function() {
         $('#handBox1').append(dices[i]);
+        handArr1.push(dices[i].innerHTML);
+        checkForMatch(handArr1);
       })
     }
   }
@@ -72,39 +71,145 @@ $(document).ready(function() {
     //if handbox has ele subtract from 5.
     //dices to roll = handbox ele - 5
     //var dices roll = 0
-    let board = document.getElementById('board2');
+    let board = $('#board2');
     if (board.children.length > 0) {
       //innerHTML = blank
-      board.innerHTML = null;
+      board.html('');
     }
 
     for (let i = 0; i < diceToRoll; i++) {
-      let div = document.createElement('div');
-      div.setAttribute('class', 'dice2');
+      let div = $('<div>');
+      div.addClass('dice2');
       let roll = Math.floor(Math.random()*6)+1;
+      // let diceImg = 'character-images/' + roll + '.png';
       diceRolled++
-      div.innerHTML = roll;
+      // div.append('<img src="' + diceImg + '"/>')
+      div.append(roll);
       // gives the divs created randomized nums
-      board.appendChild(div);
+      board.append(div);
       //
     }
     computeTurn();
     moveDices2();
   })
 
+  let handArr2 = [];
   function moveDices2() {
-    let dices = $('.dice2');
-    for (let i = 0; i < dices.length; i++) {
-      dices[i].addEventListener("click", function() {
-      $('#handBox2').append(dices[i]);
+    console.log(handArr2)
+    let dice = $('.dice2');
+    for (let i = 0; i < dice.length; i++) {
+      dice[i].addEventListener("click", function() {
+      $('#handBox2').append(dice[i]);
+      handArr2.push(dice[i].innerHTML);
+      console.log(handArr2)
+      checkForMatch(handArr2);
       })
     }
   }
 
+  let timesPressed = 0;
+  $('.hold').click(function(){
+    timesPressed++;
+    if (timesPressed === 2) {
+      winCondition();
+    }
+  })
 
+  function checkForMatch(array){
+    const tally = {};
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] in tally) {
+        continue;
+      } else {
+         tally[array[i]] = 1;
+      }
+      for (let j = i + 1; j < array.length; j++) {
+        if (array[i] == array[j]) {
+          tally[array[i]]++;
+          pCombos(tally);
+          console.log(tally)
+        }
+      }
+    }
+  }
+
+  function pCombos(tally) {
+    let combo = {
+      'single': 0,
+      'pairs': 0,
+      'threes': 0,
+      'fours': 0,
+      'fives': 0
+    };
+    console.log(tally,'this is tally in pCombos')
+    for (k in tally) {
+      if (tally[k] === 1) {
+        combo.single++
+      }else if (tally[k] === 2) {
+        combo.pairs++;
+      } else if (tally[k] === 3) {
+        combo.threes++;
+      }  else if (tally[k] === 4) {
+        combo.fours++;
+      } else if (tally[k] === 5) {
+        combo.fives++;
+      }
+    console.log(combo.fives,'combo.5')
+    console.log(combo.fours,'combo.4')
+    console.log(combo.pairs,'combo.p')
+    console.log(combo.single,'combo.s')
+    console.log(combo.threes,'combo.3')
+    comboValues(combo);
+    }
+  }
+
+  let comboPoints = {
+    'fives': 40,
+    'fours': 30,
+    'threes': 20,
+    'pair': 5,
+    'single': 1
+  };
+  function comboValues(combo){
+    let score = 0;
+    if (combo.single === 1) {
+      score += comboPoints['single'];
+      console.log(score)
+    } else if (combo.pairs === 1) {
+      score += comboPoints['pair'];
+      console.log(score)
+    } else if (combo.threes === 1) {
+      score += comboPoints['threes'];
+      console.log(score)
+    } else if (combo.fours === 1) {
+      score += comboPoints['fours'];
+      console.log(score)
+    } else if (combo.fives === 1) {
+      score += comboPoints['fives'];
+      console.log(score)
+    }
+    return score;
+  }
+
+  function winCondition(){
+    let combo1 = moveDices1();
+    let combo2 = moveDices2();
+    if (combo1 > combo2) {
+      alert("P1 WINS");
+    } else if (combo2 > combo1) {
+      alert("P2 WINS");
+    } else {
+      winningHand(combo1, combo2);
+    }
+  }
+
+
+ // function winConditions(){}
+  // WINNING CONDITION IS IF PLAYER GETS HIGHER COMBO. IF SAME TYPE OF COMBO (PAIRS ETC) RUN WINNINGHAND FUNCTION.
 
   let handScore = function(hand) {
-    const diceValue = {
+    let score = 0;
+    let diceValue = {
       '1': 7,
       '6': 6,
       '5': 5,
@@ -112,7 +217,6 @@ $(document).ready(function() {
       '3': 3,
       '2': 2
     };
-    let score = 0;
     for (let i = 0; i < hand.length; i++) {
       let key = hand[i];
       score += dicevalue[key];
@@ -120,108 +224,41 @@ $(document).ready(function() {
     return score;
   }
 
-  let p1Hand = $('#handBox1');
-  let p2Hand = $('#handBox2');
-  function winningHand(p1Hand, p2Hand) {
-
-    let playerOne = handScore(p1Hand);
-    let playerTwo = handScore(p2Hand);
+  function winningHand(handArr1, handArr2) {
+    let playerOne = handScore(handArr1);
+    let playerTwo = handScore(handArr2);
     if (playerOne > playerTwo) {
-      //return p1 Winner
+      alert("P1 WIN");
     } else if (playerTwo > playerOne) {
-      //return p2 Winner
+      alert("P2 WIN");
     } else {
-      //DRAW
+      alert("DRAW");
     }
-  }
-
-  function checkForMatch(array){
-    return array.reduce((tally, n) => {
-      //the tally key is name of item(n), if never seen before
-      //init to 1. if seen before incriment by 1.
-      tally[n] = tally[n] + 1 || 1;
-      return tally;
-    }, {});
-  }
-
-  function pCombos(obj) {
-    let tally = checkForMatch(p1Hand);
-    let pairs = 0;
-    let threes = 0;
-    let fours = 0;
-    let fives = 0;
-    for (k in tally1) {
-      if (tally[k] === 2) {
-        pairs++;
-      } else if (tally[k] === 3) {
-        threes++;
-      }  else if (tally[k] === 4) {
-        fours++;
-      } else if (tally[k] === 5) {
-        fives++;
-      }
-    }
-  }
-  function winConditions() {
-
-  }
-
-
-  // let values = tally.entries();
-  //object.entries(obj) method returns an array of key value pairs
-  //example: const obj{foo: 'bar', tazz: 50};
-  //console.log(Object.entires(obj)); = [[foo, bar], [tazz, 50]] but in this case wont be needed. Good to know for future in cause you want to grab certain things from objects and use them.
+  } // CALCULATES IF PlAYERS HAVE SAME COMBO TYPE
 
 
 
 
 
-  /*
-endTurn func(whichPlayer) arg = int {
-  if (whichplayer === 1) {
-    p1turn++
-  } else {
-    p2turn++
-  }
-}
 
-b1 = player 1 button
-if (p1turn === 2) {
-  compfunc()
-}
 
-b2 = player 2 button
-if (p2turn === 1 || p2turn === 2) {
-  compfunc();
-}
 
-compareFun() {
-  let h1 = document.getElementById('handbox1');
-  let 2 = '';
 
-  // calculate all the dice
-  // compare hands
-  if (p1 > p2 && p2turn !== 2) {
-    p2 shakes
-  } else if (p1 > p2 && p2turn === 2) {
-    return p1 wins
-  }
 
-  if (p2 > p1 && p1turn !==2) {
-    p1 shakes;
-  } else if (p2 > p1 && p1turn === 2) {
-    p2 wins
-  }
 
-  if (p2turn === 2 & p1turn === 2) {
-    if (h1 > h2) {
-      p1 wins
-    } else {
-      p2 wins
-    }
-  }
-}
-*/
+
+
+
+
+
+
+
+
+
+
+
+//** MUMBO JUMBO BELOW ***
+
   // function checkForMatch(array){
   //   return array.reduce((tally, n) => {
   //     //the tally key is name of item(n), if never seen before
@@ -232,33 +269,10 @@ compareFun() {
   // }
 
 })
-  // let tally1 = checkForMatch(p1Array);
-  // let tall2 = checkForMatch(p2Array);
-  // let values = tally.entries();
-
-
-
-
-
 
 // object.entries [k,v]
 
-  // function grabPairs() {
-  //   if (eleCount1(array) === 2) {
-  //     $('#status' + p).html('Pairs!');
-  //     $('#handBox' + p).html(... + ...);
-  //   }
-  // }
-
-
-
-
-
-
-
-
-
- /**
+ /*
    * @func checkForMatch1
    * @param array - it is the array containing the...
    * @desc func callback
@@ -269,7 +283,6 @@ compareFun() {
   //   const tally = {};
   //   //loop over array i by rows
   //   for (let i = 0; i < array.length; i++) {
-
   //     // if I've seen this key before, dont even enter the loop
   //     //skip over this row
   //     if (array[i] in tally) {
@@ -291,11 +304,40 @@ compareFun() {
   // }
 
 
+// Turn jQuery object into an array:
+// var obj = $('li');
+// var arr = $.makeArray(obj);
 
 
 
+  // let comboObj = {
+  //   'single': 0,
+  //   'pairs': 0,
+  //   'threes': 0,
+  //   'fours': 0,
+  //   'fives': 0
+  // }
 
 
+// function checkForMatch(array){
+//     const tally = {};
+//     for (let i = 0; i < array.length; i++) {
+//       if (array[i] in tally) {
+//         continue;
+//       } else {
+//          tally[array[i]] = 1;
+//       }
+//       for (let j = i + 1; j < array.length; j++) {
+//         if (array[i] == array[j]) {
+//           tally[array[i]]++;
+//         }
+//       }
+//     }
+//     return tally;
+//   }
 
 
-
+//singleton
+//what is an object
+//scheduled redux react flex
+//closures
