@@ -11,7 +11,6 @@ $(document).ready(function() {
     $('#status').show();
     $('#reset').show();
     $('.start-container').hide();
-
   })
   //need to structure computeTurn
   let playerTurn = 0;
@@ -59,6 +58,7 @@ $(document).ready(function() {
         $('#handBox1').append(dices[i]);
         handArr1.push(dices[i].innerHTML);
         checkForMatch(handArr1);
+        handScore(handArr1);
       })
     }
   }
@@ -81,7 +81,7 @@ $(document).ready(function() {
       let div = $('<div>');
       div.addClass('dice2');
       let roll = Math.floor(Math.random()*6)+1;
-      // let diceImg = 'character-images/' + roll + '.png';
+      let diceImg = 'character-images/' + roll + '.png';
       diceRolled++
       // div.append('<img src="' + diceImg + '"/>')
       div.append(roll);
@@ -102,8 +102,8 @@ $(document).ready(function() {
       $('#handBox2').append(dice[i]);
       handArr2.push(dice[i].innerHTML);
       console.log(handArr2)
-      console.log("this is checkForMatch:", checkForMatch(handArr2))
       checkForMatch(handArr2);
+      handScore(handArr2);
       })
     }
   }
@@ -137,7 +137,7 @@ $(document).ready(function() {
     console.log(tally,'this is tally in pCombos')
     for (k in tally) {
       if (tally[k] === 1) {
-        combo.single++
+        combo.single++;
       }else if (tally[k] === 2) {
         combo.pairs++;
       } else if (tally[k] === 3) {
@@ -147,6 +147,11 @@ $(document).ready(function() {
       } else if (tally[k] === 5) {
         combo.fives++;
       }
+    console.log(combo.fives,'combo.5')
+    console.log(combo.fours,'combo.4')
+    console.log(combo.pairs,'combo.p')
+    console.log(combo.single,'combo.s')
+    console.log(combo.threes,'combo.3')
     comboValues(combo);
     }
   }
@@ -162,35 +167,44 @@ $(document).ready(function() {
     let score = 0;
     if (combo.single === 1) {
       score += comboPoints['single'];
-      console.log(score)
+      console.log("this is score:", score);
     } else if (combo.pairs === 1) {
       score += comboPoints['pair'];
-      console.log(score)
+      console.log("this is score:", score);
+    } else if (combo.pairs === 2) {
+      score += (comboPoints['pair']*2);
+      console.log("this is score:", score);
     } else if (combo.threes === 1) {
       score += comboPoints['threes'];
-      console.log(score)
+      console.log("this is score:", score);
+    } else if ((combo.threes === 1) && (combo.pairs === 1)) {
+      score += (comboPoints['threes'] + comboPoints['pair']);
+      console.log("this is score:", score);
     } else if (combo.fours === 1) {
       score += comboPoints['fours'];
-      console.log(score)
+      console.log("this is score:", score);
+    } else if (combo.fours === 1 && combo.single === 1) {
+      score += (comboPoints['fours'] + comboPoints['single']);
+      console.log("this is score:", score);
     } else if (combo.fives === 1) {
       score += comboPoints['fives'];
-      console.log(score)
+      console.log("this is score:", score);
     }
-    console.log("this is score:", score);
     return score;
   }
   let timesPressed = 0;
   $('.hold').click(function(){
     timesPressed++;
+    console.log(timesPressed)
     if (timesPressed === 2) {
       winCondition();
     }
   })
 
   function winCondition(){
-    let combo1 = moveDices1();
-    let combo2 = moveDices2();
-    //console.log("this is combo1:", combo1, "this is combo2:", combo2)
+    let combo1 = moveDices1;
+    let combo2 = moveDices2;
+    console.log("this is combo1:", combo1, "this is combo2:", combo2)
     if (combo1 > combo2) {
       alert("P1 WINS");
     } else if (combo2 > combo1) {
@@ -203,35 +217,35 @@ $(document).ready(function() {
 
   // WINNING CONDITION IS IF PLAYER GETS HIGHER COMBO. IF SAME TYPE OF COMBO (PAIRS ETC) RUN WINNINGHAND FUNCTION.
 
-  // let handScore = function(hand) {
-  //   let score = 0;
-  //   let diceValue = {
-  //     '1': 7,
-  //     '6': 6,
-  //     '5': 5,
-  //     '4': 4,
-  //     '3': 3,
-  //     '2': 2
-  //   };
-  //   for (let i = 0; i < hand.length; i++) {
-  //     let key = hand[i];
-  //     score += dicevalue[key];
-  //   }
-  //   return score;
-  // }
+  let handScore = function(hand) {
+    let score = 0;
+    let diceValue = {
+      '1': 7,
+      '6': 6,
+      '5': 5,
+      '4': 4,
+      '3': 3,
+      '2': 2
+    };
+    for (let i = 0; i < hand.length; i++) {
+      let key = hand[i];
+      score += diceValue[key];
+    }
+    return score;
+  }
 
-  // function winningHand(hand1, hand2) {
-  //   let playerOne = handScore(hand1);
-  //   let playerTwo = handScore(hand2);
-  //   if (playerOne > playerTwo) {
-  //     alert("P1 WIN");
-  //   } else if (playerTwo > playerOne) {
-  //     alert("P2 WIN");
-  //   } else {
-  //     alert("DRAW");
-  //   }
-  // } // CALCULATES IF PlAYERS HAVE SAME COMBO TYPE
+  function winningHand() {
+    let playerOne = handScore(hand1);
+    let playerTwo = handScore(hand2);
+    if (playerOne > playerTwo) {
+      alert("P1 WIN");
+    } else if (playerTwo > playerOne) {
+      alert("P2 WIN");
+    } else {
+      alert("DRAW");
+    }
 
+}})
 
 
 
@@ -264,7 +278,6 @@ $(document).ready(function() {
   //   }, {});
   // }
 
-})
 
 // object.entries [k,v]
 
