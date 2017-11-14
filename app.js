@@ -5,9 +5,11 @@ $(document).ready(function() {
   $('#status').hide();
   $('#reset').hide();
   $('#restart').hide();
-  // $('<input>').attr('id', 'p1').html('#p1Name');
-  // $('<input>').attr('id', 'p2').html('#p2Name');
-  prompt("Name").innerHTML = '#p1Name';
+
+  $('<input>').attr('id', 'p1').text('#p1Name');
+  $('<input>').attr('id', 'p2').text('#p2Name');
+  let userName1;
+  let userName2;
 
   $('#starting').click(function() {
     $('#game-container1').show();
@@ -16,9 +18,11 @@ $(document).ready(function() {
     $('#reset').show();
     $('#restart').show();
     $('.start-container').hide();
-    userName = $('#p1').val();
-    userName = $('#p2').val();
+    userName1 = $('#p1').val();
+    userName2 = $('#p2').val();
   })
+
+
 
   //need to structure computeTurn
   let playerTurn = 0;
@@ -31,6 +35,9 @@ $(document).ready(function() {
       playerTurn++;
     }
   }
+
+
+
 
   $('#roll-but1').click(function() {
     //find elements in handbox
@@ -52,9 +59,8 @@ $(document).ready(function() {
       board.append(div);
     }
     computeTurn();
-    moveDices1();
+    let score1 = moveDices1();
   })
-
   let handArr1 = [];
   function moveDices1() {
     let dices = $('.dice1');
@@ -67,6 +73,11 @@ $(document).ready(function() {
       })
     }
   }
+
+
+
+
+
 
   $('#roll-but2').click(function() {
     let hand = $('#handBox2').children().length;
@@ -81,7 +92,6 @@ $(document).ready(function() {
       //innerHTML = blank
       board.html('');
     }
-
     for (let i = 0; i < diceToRoll; i++) {
       let div = $('<div>');
       div.addClass('dice2');
@@ -95,7 +105,7 @@ $(document).ready(function() {
       //
     }
     computeTurn();
-    moveDices2();
+    let score2 = moveDices2();
   })
 
   let handArr2 = [];
@@ -210,6 +220,7 @@ $(document).ready(function() {
       console.log("this is score:", score);
     }
     $('#score').html("SCORE:" + score);
+    return score;
   }
 
   let timesPressed = 0;
@@ -271,11 +282,11 @@ $(document).ready(function() {
   }
 
   $('#restart').click(function(){
-    $('#handBox1').html(null);
-    $('#handBox2').html(null);
-    $('#board1').html(null);
-    $('#board2').html(null);
-    $('#score').html(null);
+    $('.dice1').html('').remove();
+    $('.dice2').html('').remove();
+    $('#board1').html('');
+    $('#board2').html('');
+    $('#score').html('');
   })
 
 })
