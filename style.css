@@ -14,7 +14,6 @@ background-size: cover;
   display:inline-block;
   width: 50%;
   float:left;
-
 }
 
 #game-container2 {
@@ -70,13 +69,71 @@ background-size: cover;
 
 #status {
   color: red;
+  font-size: 30px;
+  background: black;
+  display: inline-flex;
+
 }
 
+#score {
+  font-size: 30px;
+  color: red;
+  background: black;
+  display: inline-flex;
+}
 
+#roll-but1 {
+  width: 100px;
+  height: 50px;
+  background-color: red;
+}
 
+#roll-but2 {
+  width: 100px;
+  height: 50px;
+  background-color: red;
+}
 
+#starting {
+  width: 150px;
+  height: 50px;
+  background-color: red;
+  font-size: 2em;
+  color: white;
+  position: absolute;
+  right: 35%;
+}
 
+#homer {
+  float: left;
+}
 
+#barney {
+  float: right;
+}
 
+.hold {
+  width: 100px;
+  height: 50px;
+  background-color: yellow;
+}
 
+#reset {
+  width: 100px;
+  height: 50px;
+  margin-left: 300px;
+}
 
+h2 {
+  color: white;
+  background-color: orange;
+  border-radius: 10px;
+  text-align: center;
+  display: inline-block;
+  top: 5%;
+}
+
+#restart{
+  width: 100px;
+  height: 50px;
+}

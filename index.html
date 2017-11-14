@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Dice Poker</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" media="all" type="text/css" href="style.css">
   <script src="http://code.jquery.com/jquery-3.2.1.js"
   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
   crossorigin="anonymous"></script>
@@ -12,33 +12,33 @@
 </head>
 
 <body>
+
   <div id='main-page' class='start-container'>
-    <button type="start-button" id='starting'>Lets Roll</button>
-    <img src= "character-images/homerStart.png">
-    <img src="character-images/barneyStart.png">
+    <button type="start-button" id='starting'>Play</button>
+    <img id="homer" src= "character-images/homerStart.png">
+    <img id="barney" src="character-images/barneyStart.png">
   </div>
 
   <div id='game-container1'>
-    <h2>Player One</h2>
+    <div id='status'>TURN</div>
+    <h2 id='p1Name'>Player One</h2>
     <img src="character-images/homerGame.jpg">
     <div id='handBox1' class='hand'></div>
       <div id='board1' class='board'></div>
       <button type="roll" id='roll-but1'>Roll</button>
-      <<button type="keep" class='hold'>Keep</button>
+      <button type="keep" class='hold'>Keep</button>
   </div>
 
-  <div id='status'>Turn Display</div>
-
   <div id='game-container2'>
-    <h2>Player Two</h2>
+    <div id='score'>SCORE</div>
+    <h2 id='p2Name'>Player Two</h2>
     <img src="character-images/barneyGame.jpg">
     <div id='handBox2' class='hand'></div>
     <div id='board2' class='board'></div>
     <button type="roll2" id='roll-but2'>Roll</button>
-    <<button type="keep" class='hold'>Keep</button>
+    <button type="keep" class='hold'>Keep</button>
   </div>
-
   <button type="menu" id="reset" onClick="window.location.reload()">Main Menu</button>
-
+  <button type="redo" id='restart'>Reset</button>
 </body>
 </html>

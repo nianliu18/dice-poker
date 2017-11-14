@@ -4,6 +4,10 @@ $(document).ready(function() {
   $('#game-container2').hide();
   $('#status').hide();
   $('#reset').hide();
+  $('#restart').hide();
+  // $('<input>').attr('id', 'p1').html('#p1Name');
+  // $('<input>').attr('id', 'p2').html('#p2Name');
+  prompt("Name").innerHTML = '#p1Name';
 
   $('#starting').click(function() {
     $('#game-container1').show();
@@ -11,15 +15,18 @@ $(document).ready(function() {
     $('#status').show();
     $('#reset').show();
     $('.start-container').hide();
+    userName = $('#p1').val();
+    userName = $('#p2').val();
   })
+
   //need to structure computeTurn
   let playerTurn = 0;
   let computeTurn = function(event) {
     if (playerTurn % 2 === 0) {
-      $('#status').html("Player Twos Turn");
+      $('#status').html("Player2 Turn");
       playerTurn++;
     } else if (playerTurn % 2 !== 0) {
-      $('#status').html("Player Ones Turn");
+      $('#status').html("Player1 Turn");
       playerTurn++;
     }
   }
@@ -34,9 +41,6 @@ $(document).ready(function() {
     let board = $('#board1');
     if (board.children.length > 0) {
       board.html('');
-      // this will wipe the board clean and produce
-      //the same set of randomized dice.
-      //problem previously was that creating individual divs connected all five dices so everytime i click roll when dices are in hand box and board box all five rolls. with this method only the bottom gets randomized.
     }
     for (let i = 0; i < diceToRoll; i++) {
       let div = $('<div>');
@@ -81,7 +85,7 @@ $(document).ready(function() {
       let div = $('<div>');
       div.addClass('dice2');
       let roll = Math.floor(Math.random()*6)+1;
-      let diceImg = 'character-images/' + roll + '.png';
+      // let diceImg = 'character-images/' + roll + '.png';
       diceRolled++
       // div.append('<img src="' + diceImg + '"/>')
       div.append(roll);
@@ -166,7 +170,9 @@ $(document).ready(function() {
   function comboValues(combo){
     let score = 0;
     if (combo.single === 1) {
+      //grab from object combo in pCombo function to get the different combinations.
       score += comboPoints['single'];
+      //grab from comboPoints to get a score value
       console.log("this is score:", score);
     } else if (combo.pairs === 1) {
       score += comboPoints['pair'];
@@ -190,18 +196,20 @@ $(document).ready(function() {
       score += comboPoints['fives'];
       console.log("this is score:", score);
     }
-    return score;
+    $('#score').html("SCORE:" + score);
   }
+
   let timesPressed = 0;
   $('.hold').click(function(){
     timesPressed++;
     console.log(timesPressed)
     if (timesPressed === 2) {
+      //when players are set on holding the dice they want to keep they press "keep" button. when keep is pressed twice run winCondition()
       winCondition();
     }
   })
 
-  function winCondition(){
+  function winCondition(hand){
     let combo1 = moveDices1;
     let combo2 = moveDices2;
     console.log("this is combo1:", combo1, "this is combo2:", combo2)
@@ -210,15 +218,17 @@ $(document).ready(function() {
     } else if (combo2 > combo1) {
       alert("P2 WINS");
     } else {
-      // winningHand(combo1, combo2);
-      alert("DRAW");
+      winningHand();
     }
   }
 
-  // WINNING CONDITION IS IF PLAYER GETS HIGHER COMBO. IF SAME TYPE OF COMBO (PAIRS ETC) RUN WINNINGHAND FUNCTION.
+  // WIN CONDITION FUNCTION IS IF PLAYER GETS HIGHER COMBO. IF SAME TYPE OF COMBO (COMPARING PAIRS ETC) RUN WINNINGHAND FUNCTION.
 
   let handScore = function(hand) {
+    //handScore is a helper function of winningHand
+    //also used handScore to grab arrayOf random and all the way up top.
     let score = 0;
+
     let diceValue = {
       '1': 7,
       '6': 6,
@@ -227,13 +237,14 @@ $(document).ready(function() {
       '3': 3,
       '2': 2
     };
+
     for (let i = 0; i < hand.length; i++) {
       let key = hand[i];
       score += diceValue[key];
     }
     return score;
   }
-
+  //Only use this winningHand function when dices have the same combination. Example two full houses.
   function winningHand() {
     let playerOne = handScore(hand1);
     let playerTwo = handScore(hand2);
@@ -244,15 +255,17 @@ $(document).ready(function() {
     } else {
       alert("DRAW");
     }
+  }
 
-}})
+  $('#restart').click(function(){
+    $('#handBox1').html(null);
+    $('#handBox2').html(null);
+    $('#board1').html(null);
+    $('#board2').html(null);
+    $('#score').html(null);
+  })
 
-
-
-
-
-
-
+})
 
 
 
@@ -268,18 +281,6 @@ $(document).ready(function() {
 
 
 //** MUMBO JUMBO BELOW ***
-
-  // function checkForMatch(array){
-  //   return array.reduce((tally, n) => {
-  //     //the tally key is name of item(n), if never seen before
-  //     //init to 1. if seen before incriment by 1.
-  //     tally[n] = tally[n] + 1 || 1;
-  //     return tally;
-  //   }, {});
-  // }
-
-
-// object.entries [k,v]
 
  /*
    * @func checkForMatch1
@@ -313,40 +314,3 @@ $(document).ready(function() {
   // }
 
 
-// Turn jQuery object into an array:
-// var obj = $('li');
-// var arr = $.makeArray(obj);
-
-
-
-  // let comboObj = {
-  //   'single': 0,
-  //   'pairs': 0,
-  //   'threes': 0,
-  //   'fours': 0,
-  //   'fives': 0
-  // }
-
-
-// function checkForMatch(array){
-//     const tally = {};
-//     for (let i = 0; i < array.length; i++) {
-//       if (array[i] in tally) {
-//         continue;
-//       } else {
-//          tally[array[i]] = 1;
-//       }
-//       for (let j = i + 1; j < array.length; j++) {
-//         if (array[i] == array[j]) {
-//           tally[array[i]]++;
-//         }
-//       }
-//     }
-//     return tally;
-//   }
-
-
-//singleton
-//what is an object
-//scheduled redux react flex
-//closures
