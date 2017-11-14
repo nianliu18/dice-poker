@@ -24,4 +24,28 @@ PROJECT Schedule/Phases
 -Monday: DeBug presentation prep. 
 
 
+PROBLEMS NEED TO BE FIXED
+----------------------------------------------
+Main problem is to get the winning condition to accept the right information. For now I have a proble with grabbing the right combination1 and combination2 to render the right results. If we console log all the way down to scoring the dice, they all add up. Just when I try to check winCondition, the game fails. 
 
+CSS clean up. Still need to create an input box that takes in user information and pushes to next page. Media Query and need to find method on stopping divs from overlapping when window resizing. 
+
+Turn Based Player game. Need to add and remove eventListeners to stop players from rolling infinite amount of times and tapping keep more than once per turn. 
+
+Able to append dice images to the dice divs but have trouble resizing the images to make them smaller and fit the screen of HandBox. 
+
+Technologies Used
+-----------------------------------------------
+Javascript
+J Query
+CSS 
+HTML
+
+Installation Instructions
+-------------------------------------------------
+Pseudo Coded the logic of the game
+Created a visual of how the board and game would look. Used Wireframe from balsamiq.cloud
+Loaded all the HTML content needed. Divs, buttons, img src etc.
+Loaded CSS with basic borders, colors, and preferences I liked. 
+Started JS filed named app.js and began with a page loader, along with a landing view and game view.
+All work in JS was referenced back to the pseudo code. Each word of source code was translated/communicated with JS or JQuery for game to work. 
