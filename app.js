@@ -102,18 +102,11 @@ $(document).ready(function() {
       $('#handBox2').append(dice[i]);
       handArr2.push(dice[i].innerHTML);
       console.log(handArr2)
+      console.log("this is checkForMatch:", checkForMatch(handArr2))
       checkForMatch(handArr2);
       })
     }
   }
-
-  let timesPressed = 0;
-  $('.hold').click(function(){
-    timesPressed++;
-    if (timesPressed === 2) {
-      winCondition();
-    }
-  })
 
   function checkForMatch(array){
     const tally = {};
@@ -154,11 +147,6 @@ $(document).ready(function() {
       } else if (tally[k] === 5) {
         combo.fives++;
       }
-    console.log(combo.fives,'combo.5')
-    console.log(combo.fours,'combo.4')
-    console.log(combo.pairs,'combo.p')
-    console.log(combo.single,'combo.s')
-    console.log(combo.threes,'combo.3')
     comboValues(combo);
     }
   }
@@ -188,53 +176,61 @@ $(document).ready(function() {
       score += comboPoints['fives'];
       console.log(score)
     }
+    console.log("this is score:", score);
     return score;
   }
+  let timesPressed = 0;
+  $('.hold').click(function(){
+    timesPressed++;
+    if (timesPressed === 2) {
+      winCondition();
+    }
+  })
 
   function winCondition(){
     let combo1 = moveDices1();
     let combo2 = moveDices2();
+    //console.log("this is combo1:", combo1, "this is combo2:", combo2)
     if (combo1 > combo2) {
       alert("P1 WINS");
     } else if (combo2 > combo1) {
       alert("P2 WINS");
     } else {
-      winningHand(combo1, combo2);
-    }
-  }
-
-
- // function winConditions(){}
-  // WINNING CONDITION IS IF PLAYER GETS HIGHER COMBO. IF SAME TYPE OF COMBO (PAIRS ETC) RUN WINNINGHAND FUNCTION.
-
-  let handScore = function(hand) {
-    let score = 0;
-    let diceValue = {
-      '1': 7,
-      '6': 6,
-      '5': 5,
-      '4': 4,
-      '3': 3,
-      '2': 2
-    };
-    for (let i = 0; i < hand.length; i++) {
-      let key = hand[i];
-      score += dicevalue[key];
-    }
-    return score;
-  }
-
-  function winningHand(handArr1, handArr2) {
-    let playerOne = handScore(handArr1);
-    let playerTwo = handScore(handArr2);
-    if (playerOne > playerTwo) {
-      alert("P1 WIN");
-    } else if (playerTwo > playerOne) {
-      alert("P2 WIN");
-    } else {
+      // winningHand(combo1, combo2);
       alert("DRAW");
     }
-  } // CALCULATES IF PlAYERS HAVE SAME COMBO TYPE
+  }
+
+  // WINNING CONDITION IS IF PLAYER GETS HIGHER COMBO. IF SAME TYPE OF COMBO (PAIRS ETC) RUN WINNINGHAND FUNCTION.
+
+  // let handScore = function(hand) {
+  //   let score = 0;
+  //   let diceValue = {
+  //     '1': 7,
+  //     '6': 6,
+  //     '5': 5,
+  //     '4': 4,
+  //     '3': 3,
+  //     '2': 2
+  //   };
+  //   for (let i = 0; i < hand.length; i++) {
+  //     let key = hand[i];
+  //     score += dicevalue[key];
+  //   }
+  //   return score;
+  // }
+
+  // function winningHand(hand1, hand2) {
+  //   let playerOne = handScore(hand1);
+  //   let playerTwo = handScore(hand2);
+  //   if (playerOne > playerTwo) {
+  //     alert("P1 WIN");
+  //   } else if (playerTwo > playerOne) {
+  //     alert("P2 WIN");
+  //   } else {
+  //     alert("DRAW");
+  //   }
+  // } // CALCULATES IF PlAYERS HAVE SAME COMBO TYPE
 
 
 
