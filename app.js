@@ -14,6 +14,7 @@ $(document).ready(function() {
     $('#game-container2').show()
     $('#status').show();
     $('#reset').show();
+    $('#restart').show();
     $('.start-container').hide();
     userName = $('#p1').val();
     userName = $('#p2').val();
@@ -113,14 +114,18 @@ $(document).ready(function() {
   }
 
   function checkForMatch(array){
+    //function is exactly what its name is saying.
     const tally = {};
     for (let i = 0; i < array.length; i++) {
+      //iterating through the rows
       if (array[i] in tally) {
+        //if we seen it before keep find others
         continue;
       } else {
          tally[array[i]] = 1;
       }
       for (let j = i + 1; j < array.length; j++) {
+        //iterating through the columns
         if (array[i] == array[j]) {
           tally[array[i]]++;
           pCombos(tally);
@@ -131,6 +136,7 @@ $(document).ready(function() {
   }
 
   function pCombos(tally) {
+    //pCombos function grabs from checkForMatch function. CheckForMatch function arranges dice array to a dice object. Making it easier for us to access values.
     let combo = {
       'single': 0,
       'pairs': 0,
@@ -138,24 +144,31 @@ $(document).ready(function() {
       'fours': 0,
       'fives': 0
     };
-    console.log(tally,'this is tally in pCombos')
+    //changes on the bottom are made in the object up top
     for (k in tally) {
+      //so we use FOR IN loop to access the object.
       if (tally[k] === 1) {
+        //if you see a value of 1 in the object we add 1 to value of single
         combo.single++;
       }else if (tally[k] === 2) {
         combo.pairs++;
+        //add 1 to value of pairs if we see a value of 2 in the object we are taking in.
       } else if (tally[k] === 3) {
         combo.threes++;
+        //same here
       }  else if (tally[k] === 4) {
         combo.fours++;
+        //same THANG hereee
       } else if (tally[k] === 5) {
         combo.fives++;
+        //you already knowww
       }
     console.log(combo.fives,'combo.5')
     console.log(combo.fours,'combo.4')
     console.log(combo.pairs,'combo.p')
     console.log(combo.single,'combo.s')
     console.log(combo.threes,'combo.3')
+    //testing things out making sure they work.
     comboValues(combo);
     }
   }
