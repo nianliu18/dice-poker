@@ -41,11 +41,14 @@ J Query
 CSS 
 HTML
 
-Installation Instructions
+Steps to completion of game. 
 -------------------------------------------------
-Pseudo Coded the logic of the game
-Created a visual of how the board and game would look. Used Wireframe from balsamiq.cloud
-Loaded all the HTML content needed. Divs, buttons, img src etc.
-Loaded CSS with basic borders, colors, and preferences I liked. 
+Pseudo Code logic belonging to the game.
+Create a visual of how the board and game would look. Used Wireframe from balsamiq.cloud (free trial 30 days)
+Create needed HTML content. Divs, buttons, img, and arrage them accordingly.
+Load CSS with basic borders, colors, and preferences. 
 Started JS filed named app.js and began with a page loader, along with a landing view and game view.
+Javascript will be written in app.js.
+HTML in index.html
+CSS will be style.css
 All work in JS was referenced back to the pseudo code. Each word of source code was translated/communicated with JS or JQuery for game to work. 
