@@ -1,3 +1,5 @@
+//change up and fix logic when ready...
+
 $(document).ready(function() {
 
   $('#game-container1').hide();
